@@ -1,8 +1,11 @@
-// import PropTypes from "prop-types";
+/* eslint-disable react-refresh/only-export-components */
 
-import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
-import { MovieDetails } from "../../themoviedbAPI";
-export default function MovieDetail() {
+import { Link, LoaderFunction, Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { createAPIPath, MovieDetails } from "../../themoviedbAPI";
+export const loader: LoaderFunction = async function ({ request, params }) {
+  return fetch(createAPIPath(`movie/${params.movieId}`, new URLSearchParams({ append_to_response: "credits,reviews" })), { signal: request.signal })
+}
+export function Component() {
   const data = useLoaderData() as MovieDetails
   console.log(data);
   const nav = useNavigate()
@@ -29,9 +32,6 @@ export default function MovieDetail() {
     <hr />
     <Outlet />
   </>
-
 }
 
-MovieDetail.propTypes = {
-  // visible: PropTypes.bool.isRequired,
-};
+Component.displayName = "MovieDetail";

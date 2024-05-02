@@ -1,9 +1,17 @@
-import { Form, useSearchParams } from "react-router-dom";
+/* eslint-disable react-refresh/only-export-components */
+import { Form, LoaderFunction, useSearchParams } from "react-router-dom";
 import { Link, useLoaderData } from "react-router-dom";
-import { SearchResult } from "../../themoviedbAPI";
+import { createAPIPath, SearchResult } from "../../themoviedbAPI";
 import { useRef } from "react";
 
-export default function Movies() {
+export const loader: LoaderFunction = async function ({ request }) {
+  const url = new URL(request.url);
+  const query = url.searchParams.get("query");
+  if (!query) return { page: 1, results: [], total_pages: 0, total_results: 0 };
+  return fetch(createAPIPath("search/movie", url.searchParams), { signal: request.signal })
+}
+
+export function Component() {
   const data = useLoaderData() as SearchResult;
   // console.log(data);
   const [searchParams] = useSearchParams();
@@ -23,3 +31,4 @@ export default function Movies() {
     </ul>
   </>;
 }
+Component.displayName = "Movies";
