@@ -5,7 +5,7 @@ import { SearchResult } from "../themoviedbAPI";
 
 export default function Home() {
   const data = useLoaderData() as SearchResult
-  console.log(data);
+  // console.log(data);
   return <>
     <h1>Home</h1>
     <ul>

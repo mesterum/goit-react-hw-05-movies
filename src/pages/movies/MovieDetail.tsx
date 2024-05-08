@@ -7,7 +7,7 @@ export const loader: LoaderFunction = async function ({ request, params }) {
 }
 export function Component() {
   const data = useLoaderData() as MovieDetails
-  console.log(data);
+  // console.log(data);
   const nav = useNavigate()
   return <>
     <button onClick={() => nav(-1)}>Go back</button>
